@@ -23,6 +23,7 @@ public class BiliSearchAPI {
         // 设置本地 EdgeDriver 路径
         System.setProperty("webdriver.edge.driver", "D:\\ProgramsForJava\\msedgedriver.exe");
         EdgeOptions options = new EdgeOptions();
+        //options.addArguments("--headless=new");
         driver = new EdgeDriver(options);
     }
 
