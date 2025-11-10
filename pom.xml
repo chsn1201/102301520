@@ -62,6 +62,13 @@
             <artifactId>jieba-analysis</artifactId>
             <version>1.0.2</version>
         </dependency>
+
+        <!-- Kumo 词云 -->
+        <dependency>
+            <groupId>com.kennycason</groupId>
+            <artifactId>kumo-core</artifactId>
+            <version>1.28</version>
+        </dependency>
     </dependencies>
 
     <build>

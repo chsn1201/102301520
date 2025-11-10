@@ -1,14 +1,12 @@
 package com.Demo;
 
-import com.Demo.api.BiliSearchAPI;
-import com.Demo.api.DanmakuFetcherAPI;
-import com.Demo.api.ExcelExporter;
-import com.Demo.api.TextProcessor;
+import com.Demo.api.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +22,7 @@ public class ApiTest {
     private static DanmakuFetcherAPI danmakuFetcherAPI;
     private static TextProcessor textProcessor;
     private static ExcelExporter excelExporter;
+    private static WordCloudGenerator wordCloudGenerator;
 
     @BeforeAll
     public static void setup() {
@@ -32,6 +31,7 @@ public class ApiTest {
         danmakuFetcherAPI = new DanmakuFetcherAPI();
         textProcessor = new TextProcessor();
         excelExporter = new ExcelExporter();
+        wordCloudGenerator = new WordCloudGenerator();
     }
 
     @AfterAll
@@ -84,8 +84,6 @@ public class ApiTest {
 
     @Test
     public void testExcelExporter() {
-        ExcelExporter exporter = new ExcelExporter();
-
         Map<String, Integer> freq = Map.of(
                 "大模型", 10,
                 "应用", 8,
@@ -94,9 +92,26 @@ public class ApiTest {
         List<Map.Entry<String, Integer>> top = freq.entrySet().stream().toList();
 
         String path = "D:\\test_stats.xlsx";
-        exporter.exportWordFreq(path, freq, top);
+        excelExporter.exportWordFreq(path, freq, top);
 
         File file = new File(path);
         System.out.println("Excel 文件生成成功: " + file.getAbsolutePath());
+    }
+
+    @Test
+    public void testWordCloudGenerator() {
+
+        Map<String, Integer> freq = new HashMap<>();
+        freq.put("大模型", 50);
+        freq.put("AI", 30);
+        freq.put("参数", 20);
+        freq.put("算力", 15);
+        freq.put("训练", 10);
+
+        String output = "D:\\test_wordcloud.png";
+        wordCloudGenerator.generateWordCloud(freq, output);
+
+        File file = new File(output);
+        System.out.println("词云生成成功: " + file.getAbsolutePath());
     }
 }
