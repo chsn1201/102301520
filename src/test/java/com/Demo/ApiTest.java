@@ -2,11 +2,13 @@ package com.Demo;
 
 import com.Demo.api.BiliSearchAPI;
 import com.Demo.api.DanmakuFetcherAPI;
+import com.Demo.api.ExcelExporter;
 import com.Demo.api.TextProcessor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,7 @@ public class ApiTest {
     private static BiliSearchAPI biliSearchAPI;
     private static DanmakuFetcherAPI danmakuFetcherAPI;
     private static TextProcessor textProcessor;
+    private static ExcelExporter excelExporter;
 
     @BeforeAll
     public static void setup() {
@@ -28,6 +31,7 @@ public class ApiTest {
         biliSearchAPI = new BiliSearchAPI();
         danmakuFetcherAPI = new DanmakuFetcherAPI();
         textProcessor = new TextProcessor();
+        excelExporter = new ExcelExporter();
     }
 
     @AfterAll
@@ -76,5 +80,23 @@ public class ApiTest {
         // 4. TopN
         var top = textProcessor.topN(freq, 3);
         System.out.println("Top3: " + top);
+    }
+
+    @Test
+    public void testExcelExporter() {
+        ExcelExporter exporter = new ExcelExporter();
+
+        Map<String, Integer> freq = Map.of(
+                "大模型", 10,
+                "应用", 8,
+                "AI", 5
+        );
+        List<Map.Entry<String, Integer>> top = freq.entrySet().stream().toList();
+
+        String path = "D:\\test_stats.xlsx";
+        exporter.exportWordFreq(path, freq, top);
+
+        File file = new File(path);
+        System.out.println("Excel 文件生成成功: " + file.getAbsolutePath());
     }
 }
