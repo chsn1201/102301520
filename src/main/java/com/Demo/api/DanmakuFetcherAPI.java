@@ -29,6 +29,10 @@ public class DanmakuFetcherAPI {
         driver = new EdgeDriver(options);
     }
 
+    public DanmakuFetcherAPI(WebDriver driver) {
+        this.driver = driver;
+    }
+
     /**
      * 根据bv获取cid
      * @param bv bv号

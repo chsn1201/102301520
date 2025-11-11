@@ -27,6 +27,10 @@ public class BiliSearchAPI {
         driver = new EdgeDriver(options);
     }
 
+    public BiliSearchAPI(WebDriver driver) {
+        this.driver = driver;
+    }
+
     /**
      * 根据单个关键词获取至多 targetCount 个不重复的 BV
      * @param keyword 关键词
